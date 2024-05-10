@@ -1,23 +1,29 @@
+import { Request, Response } from 'express'
 
+function getCars(req: Request, res: Response) {
+  return res.status(200).json()
+}
 
-function getCars(req, res) {
+function getCarById(req: Request, res: Response) {
   return res.status(200)
 }
 
-function getCarById(req, res) {
+function addCar(req: Request, res: Response) {
   return res.status(200)
 }
 
-function addCar(req, res) {
+function updateCarById(req: Request, res: Response) {
   return res.status(200)
 }
 
-function updateCarById(req, res) {
+function deleteCarById(req: Request, res: Response) {
   return res.status(200)
 }
 
-function deleteCarById(req, res) {
-  return res.status(200)
+export {
+  getCars,
+  getCarById,
+  addCar,
+  updateCarById,
+  deleteCarById
 }
-
-export 
