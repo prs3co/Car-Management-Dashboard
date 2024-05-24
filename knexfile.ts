@@ -8,7 +8,8 @@ const config: { [key: string]: Knex.Config } = {
     connection: {
       database: "car_management",
       user: "postgres",
-      password: "macgres"
+      password: "macgres",
+      port: 5432
     },
     pool: {
       min: 2,
