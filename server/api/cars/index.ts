@@ -1,5 +1,9 @@
 import { Request, Response } from 'express'
 
+let cars = {
+  
+}
+
 function getCars(req: Request, res: Response) {
   return res.status(200).json()
 }
