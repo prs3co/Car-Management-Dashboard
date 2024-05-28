@@ -20,11 +20,14 @@ async function getCars(req: Request, res: Response) {
 async function getCarById(req: Request, res: Response) {
   const { id } = req.params
 
-  const cars = await CarsModel.query().findById(id).throwIfNotFound()
+  try {
+    const cars = await CarsModel.query().findById(id).throwIfNotFound()
 
-  if (!cars) return res.status(404).send('Data tidak ditemukan')
+    return res.status(200).json(cars)
+  } catch (error) {
+    return res.status(404).send('Data tidak ditemukan')
+  }
 
-  return res.status(200).json(cars)
 }
 
 async function addCar(req: Request, res: Response) {
@@ -52,12 +55,67 @@ async function addCar(req: Request, res: Response) {
 
 }
 
-function updateCarById(req: Request, res: Response) {
-  return res.status(200)
+async function updateCarById(req: Request, res: Response) {
+  const { id } = req.params
+
+  if(!req.file){
+        try{
+            const books = await BooksModel.query()
+                .where({ id })
+                .patch(req.body)
+                .throwIfNotFound()
+                .returning("*");
+
+            return res.status(200).send("Data berhasil di update")
+        }catch (e){
+            return res.status(404).send("Data tidak ditemukan!")
+        }
+  }
+
+    const fileBase64 = req.file.buffer.toString("base64")
+    const file = `data:${req.file.mimetype};base64,${fileBase64}`
+
+    cloudinary.uploader.upload(file, async function(err:UploadApiErrorResponse, 
+        result:UploadApiResponse){
+        if(!!err){
+            console.log(err)
+            return res.status(400).send("Gagal upload file")
+        }
+
+        try{
+            const books = await BooksModel.query()
+                .where({ id })
+                .patch({
+                    ...req.body,
+                    cover: result.url
+                })
+                .throwIfNotFound()
+                .returning("*");
+
+            return res.status(200).send("Data berhasil di update")
+        }catch (e){
+            return res.status(404).send("Data tidak ditemukan!")
+        }
+    })
 }
 
-function deleteCarById(req: Request, res: Response) {
-  return res.status(200)
+async function deleteCarById(req: Request, res: Response) {
+  const { id } = req.params
+
+  try {
+    CarsModel
+      .query()
+      .deleteById(id)
+      .throwIfNotFound()
+      .then(() => res.status(200).send("Data berhasil di hapus"))
+      .catch
+
+  } catch (error) {
+    return res.status(404).send('Data tidak ditemukan')
+  }
+
+
+
 }
 
 export {

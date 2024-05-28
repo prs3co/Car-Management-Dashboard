@@ -10,15 +10,18 @@ import upload from './server/middleware/multer'
 
 import knex from 'knex'
 import { Model } from 'objection'
+import 'dotenv/config'
+import { env } from 'process'
+
 
 const app = express()
 const knexInstance = knex({
-  client: "postgresql",
+  client: env.POSTGRES_CLIENT,
   connection: {
-    database: "car_management",
-    user: "postgres",
-    password: "macgres",
-    port: 5432
+    database: env.POSTGRES_DB,
+    user: env.POSTGRES_USER,
+    password: env.POSTGRES_PASS,
+    port: Number(env.POSTGRES_PORT)
   },
 })
 const port = 8000

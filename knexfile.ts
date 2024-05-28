@@ -1,15 +1,19 @@
 import type { Knex } from "knex";
+import 'dotenv/config'
+
+import { env } from "process";
 
 // Update with your config settings.
+console.log(env.POSTGRES_CLIENT)
 
 const config: { [key: string]: Knex.Config } = {
   development: {
-    client: "postgresql",
+    client: env.POSTGRES_CLIENT,
     connection: {
-      database: "car_management",
-      user: "postgres",
-      password: "macgres",
-      port: 5432
+      database: env.POSTGRES_DB,
+      user: env.POSTGRES_USER,
+      password: env.POSTGRES_PASS,
+      port: Number(env.POSTGRES_PORT)
     },
     pool: {
       min: 2,
