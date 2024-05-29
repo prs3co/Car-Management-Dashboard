@@ -31,7 +31,7 @@ Model.knex(knexInstance)
 app.get("/api/v1/cars", getCars)
 app.get('/api/v1/cars/:id', getCarById)
 app.post('/api/v1/cars', upload.single('image'), addCar)
-app.put('/api/v1/cars/:id', updateCarById)
+app.put('/api/v1/cars/:id', upload.single('image'), updateCarById)
 app.delete('/api/v1/cars/:id', deleteCarById)
 
 app.listen(port, () => {
