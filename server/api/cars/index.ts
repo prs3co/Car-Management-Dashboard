@@ -58,44 +58,47 @@ async function addCar(req: Request, res: Response) {
 async function updateCarById(req: Request, res: Response) {
   const { id } = req.params
 
-  if(!req.file){
-        try{
-            const books = await BooksModel.query()
-                .where({ id })
-                .patch(req.body)
-                .throwIfNotFound()
-                .returning("*");
+  if (!req.file) {
+    try {
+      const cars = await CarsModel
+        .query()
+        .where({ id })
+        .patch(req.body)
+        .throwIfNotFound()
+        .returning("*")
 
-            return res.status(200).send("Data berhasil di update")
-        }catch (e){
-            return res.status(404).send("Data tidak ditemukan!")
-        }
+      return res.status(200).send('Data berhasil di update')
+    } catch (error) {
+      return res.status(404).send('Data tidak ditemukan')
+    }
   }
 
-    const fileBase64 = req.file.buffer.toString("base64")
-    const file = `data:${req.file.mimetype};base64,${fileBase64}`
+  const fileBase64 = req.file.buffer.toString("base64")
+  const file = `data:${req.file.mimetype};base64,${fileBase64}`
 
-    cloudinary.uploader.upload(file, async function(err:UploadApiErrorResponse, 
-        result:UploadApiResponse){
-        if(!!err){
-            console.log(err)
-            return res.status(400).send("Gagal upload file")
-        }
 
-        try{
-            const books = await BooksModel.query()
-                .where({ id })
-                .patch({
-                    ...req.body,
-                    cover: result.url
-                })
-                .throwIfNotFound()
-                .returning("*");
+  cloudinary.uploader.upload(file, async function(err: UploadApiErrorResponse, 
+    result:UploadApiResponse) {
+      if (err) {
+        console.log(err)
+        return res.status(400).send('Gagal upload file')
+      }
 
-            return res.status(200).send("Data berhasil di update")
-        }catch (e){
-            return res.status(404).send("Data tidak ditemukan!")
-        }
+      try {
+        const cars = await CarsModel
+          .query()
+          .where({ id })
+          .patch({
+            ...req.body,
+            image: result.url
+          })
+          .throwIfNotFound()
+          .returning('*')
+
+        return res.status(404).send('Data berhasil di update')
+      } catch (error) {
+        return res.status(404).send('Data tidak ditemukan')
+      }
     })
 }
 
