@@ -6,7 +6,7 @@ Hi read me pls :)
 
 ## ERD (Entity Relationship Diagram)
 
-![Entity Relationship Diagram](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Entity Relationship Diagram]('public/desc/Car-Management-Ch6.png')
 
 
 ## API Reference
@@ -52,10 +52,10 @@ Hi read me pls :)
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to delete |
 
-#### Edit car
+#### Update/Edit car
 
 ```http
-  UPDATE /api/v1/cars/${id}
+  PUT /api/v1/cars/${id}
 ```
 
 | Parameter | Type     | Description                       |
