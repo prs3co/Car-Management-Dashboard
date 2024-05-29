@@ -6,7 +6,7 @@ Hi read me pls :)
 
 ## ERD (Entity Relationship Diagram)
 
-![Entity Relationship Diagram]('public/desc/Car-Management-Ch6.png')
+![Entity Relationship Diagram](public/desc/Car-Management-Ch6.png)
 
 
 ## API Reference
