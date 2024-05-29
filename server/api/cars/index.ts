@@ -57,7 +57,6 @@ async function addCar(req: Request, res: Response) {
 
 async function updateCarById(req: Request, res: Response) {
   const { id } = req.params
-  console.log(id)
 
   if (!req.file) {
     try {
